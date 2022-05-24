@@ -11,7 +11,7 @@ import { Scatter } from "react-chartjs-2";
 import Iterator from "./data/utils/iterator.js";
 import testData from "./data/data/testData";
 import { formatData } from "./data/utils/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const fullData = require("./data/data/input");
 
@@ -56,10 +56,17 @@ function App() {
     ],
   });
 
+  const [amountOfSteps, setAmountOfSteps] = useState(lights.getCurrentStep());
+
   const [step, setStep] = useState(1);
+
+  useEffect(() => {
+    setAmountOfSteps(lights.getCurrentStep());
+  }, [currentData]);
 
   const callNextLights = () => {
     console.log("not set yet");
+
     setCurrentData((prevData) => {
       const newDataSet = lights.next(step).map((light) => {
         return { x: light.position[0], y: light.position[1] };
@@ -136,6 +143,9 @@ function App() {
       >
         increase step
       </button>
+
+      <p>{amountOfSteps}</p>
+      <p>The target amount to read the message is 10011</p>
     </div>
   );
 }

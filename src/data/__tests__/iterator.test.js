@@ -110,4 +110,24 @@ describe("Iterator", () => {
       ]);
     });
   });
+
+  describe("getCurrentStep", () => {
+    test("should return the current amount of steps taken only in the postive direction", () => {
+      const input = `position=< 3, -2> velocity=<-1,  1>\nposition=< 6, 10> velocity=<-2, -1>`;
+      const formattedData = formatData(input);
+      const lightIterator = new Iterator(formattedData);
+
+      //Inital value call, does not count as a step
+      lightIterator.next();
+
+      //actual steps
+      lightIterator.next();
+      lightIterator.next();
+
+      expect(lightIterator.getCurrentStep()).toBe(2);
+
+      lightIterator.prev();
+      expect(lightIterator.getCurrentStep()).toBe(1);
+    });
+  });
 });

@@ -2,6 +2,7 @@ class Iterator {
   #currentPosition;
   #firstCall;
   #canvasSize;
+  #currentStep = 0;
 
   constructor(input) {
     this.#currentPosition = input;
@@ -17,6 +18,7 @@ class Iterator {
       return this.#currentPosition;
     }
     for (let i = 1; i <= step; i++) {
+      this.#currentStep++;
       this.#currentPosition.forEach((light) => {
         light.position[0] += light.velocity[0];
         light.position[1] += light.velocity[1];
@@ -32,6 +34,7 @@ class Iterator {
       return this.#currentPosition;
     }
     for (let i = 1; i <= step; i++) {
+      this.#currentStep--;
       this.#currentPosition.forEach((light) => {
         light.position[0] -= light.velocity[0];
         light.position[1] -= light.velocity[1];
@@ -55,6 +58,10 @@ class Iterator {
       this.#canvasSize = { xAxis: maxVal[0] * 2, yAxis: maxVal[1] * 2 };
     }
     return this.#canvasSize;
+  }
+
+  getCurrentStep() {
+    return this.#currentStep;
   }
 }
 
